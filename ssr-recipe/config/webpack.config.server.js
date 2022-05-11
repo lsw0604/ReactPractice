@@ -1,6 +1,6 @@
-const nodeExternals = require('webpack-node-externals');
 const paths = require('./paths');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
+const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
 const getClientEnvironment = require('./env');
 
@@ -12,30 +12,30 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 
 module.exports = {
-  mode: 'production', // 프로덕션 모드로 설정하여 최적화 옵션들을 활성화
-  entry: paths.ssrIndexJs, // 엔트리 경로
-  target: 'node', // node 환경에서 실행될 것이라는 점을 명시
+  mode: 'production',
+  entry: paths.ssrIndexJs,
+  target: 'node',
   output: {
-    path: paths.ssrBuild, // 빌드 경로
-    filename: 'server.js', // 파일 이름
-    chunkFilename: 'js/[name].chunk.js', // 정적 파일이 제공될 경로
-    publicPath: paths.publicUrlOrPath, // 정적 파일이 제공될 경로
+    path: paths.ssrBuild,
+    filename: 'server.js',
+    chunkFilename: 'js/[name].chunk.js',
+    publicPath: paths.publicUrlOrPath,
   },
   module: {
     rules: [
       {
         oneOf: [
-          // 자바 스크립트를 위한 처리
-          // 기존 webpack.config.js를 참고하여 작성
+          // 자바스크립트를 위한 처리
+          // 기존 webpack.config.js 를 참고하여 작성
           {
-            test:/\.(js|mjs|jsx|ts|tsx)$/,
+            test: /\.(js|mjs|jsx|ts|tsx)$/,
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
               customize: require.resolve(
                 'babel-preset-react-app/webpack-overrides'
               ),
-              preset: [
+              presets: [
                 [
                   require.resolve('babel-preset-react-app'),
                   {
@@ -50,7 +50,7 @@ module.exports = {
                     loaderMap: {
                       svg: {
                         ReactComponent:
-                        '@svgr/webpack?-svgo,+titleProp,+ref![path]',
+                          '@svgr/webpack?-svgo,+titleProp,+ref![path]',
                       },
                     },
                   },
@@ -65,7 +65,7 @@ module.exports = {
           {
             test: cssRegex,
             exclude: cssModuleRegex,
-            // exportOnlyLocals: true 옵션을 설정해야 실제 css 파일을 생성하지 않습니다.
+            //  exportOnlyLocals: true 옵션을 설정해야 실제 css 파일을 생성하지 않습니다.
             loader: require.resolve('css-loader'),
             options: {
               importLoaders: 1,
@@ -79,13 +79,14 @@ module.exports = {
             test: cssModuleRegex,
             loader: require.resolve('css-loader'),
             options: {
+              importLoaders: 1,
               modules: {
                 exportOnlyLocals: true,
                 getLocalIdent: getCSSModuleLocalIdent,
               },
             },
           },
-          //SASS 를 위한 처리
+          // Sass 를 위한 처리
           {
             test: sassRegex,
             exclude: sassModuleRegex,
@@ -102,7 +103,7 @@ module.exports = {
               require.resolve('sass-loader'),
             ],
           },
-          // SASS + CSS Module 을 위한 처리
+          // Sass + CSS Module 을 위한 처리
           {
             test: sassRegex,
             exclude: sassModuleRegex,
@@ -113,7 +114,7 @@ module.exports = {
                   importLoaders: 3,
                   modules: {
                     exportOnlyLocals: true,
-                    getLocalIdentL: getCSSModuleLocalIdent,
+                    getLocalIdent: getCSSModuleLocalIdent,
                   },
                 },
               },
@@ -128,7 +129,7 @@ module.exports = {
               emitFile: false, // 파일을 따로 저장하지 않는 옵션
               limit: 10000, // 원래는 9.76KB가 넘어가면 파일로 저장하는데
               // emitFile 값이 false 일땐 경로만 준비하고 파일은 저장하지 않습니다.
-              name: 'static/media/[name]/[hash:8].[ext]',
+              name: 'static/media/[name].[hash:8].[ext]',
             },
           },
           // 위에서 설정된 확장자를 제외한 파일들은
@@ -146,11 +147,10 @@ module.exports = {
     ],
   },
   resolve: {
-    modules: ['node_modules']
+    modules: ['node_modules'],
   },
-  externals: [
-    nodeExternals({
-      allowlist: [/@babel/],
-    })
-  ]
+  externals: [nodeExternals()],
+  plugins: [
+    new webpack.DefinePlugin(env.stringified), // 환경변수를 주입해줍니다.
+  ],
 };
