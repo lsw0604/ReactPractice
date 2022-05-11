@@ -1,13 +1,15 @@
 const nodeExternals = require('webpack-node-externals');
 const paths = require('./paths');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
+const webpack = require('webpack');
+const getClientEnvironment = require('./env');
 
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
-// const env = getClientenvironment(paths.publicUrlOrPath.slice(0, -1));
+const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 
 module.exports = {
   mode: 'production', // 프로덕션 모드로 설정하여 최적화 옵션들을 활성화
@@ -146,5 +148,9 @@ module.exports = {
   resolve: {
     modules: ['node_modules']
   },
-  externals: [nodeExternals()]
+  externals: [
+    nodeExternals({
+      allowlist: [/@babel/],
+    })
+  ]
 };
