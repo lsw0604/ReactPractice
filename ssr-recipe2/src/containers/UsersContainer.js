@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Users from '../components';
+import Users from '../components/Users';
 import { connect } from 'react-redux';
 import { getUsers } from '../modules/users';
 

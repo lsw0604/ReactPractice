@@ -5,7 +5,7 @@ const Users = ({ users }) => {
   return (
     <div>
       <ul>
-        {users.mao(user => (
+        {users.map(user => (
           <li key={user.id}>
             <Link to={`/users/${user.id}`}>{user.username}</Link>
           </li>
