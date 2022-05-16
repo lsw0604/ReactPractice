@@ -9,6 +9,7 @@ export default PreloadContext;
 // resolve는 함수 타입 입니다.
 export const Preloader = ({ resolve }) => {
   const preloadContext = useContext(PreloadContext);
+
   if (!preloadContext) return null; // context값이 유효하지 않다면 아무것도 하지 않음
   if (preloadContext.done) return null; // 이미 작업이 끝났다면 아무것도 하지 않음
 
