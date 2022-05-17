@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import createSagaMiddleware from '@redux-saga';
+import createSagaMiddleware from 'redux-saga';
 import rootReducer, { rootSaga } from './modules';
 
 const SagaMiddleware = createSagaMiddleware();
