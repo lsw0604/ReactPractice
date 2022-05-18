@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { call, put, takeEvery } from 'redux-saga';
+import { call, put, takeEvery } from 'redux-saga/effects';
 
 const GET_USERS_PENDING = 'users/GET_USERS_PENDING';
 const GET_USERS_SUCCESS = 'users/GET_USERS_SUCCESS';
