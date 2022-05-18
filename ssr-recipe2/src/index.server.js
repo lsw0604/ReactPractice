@@ -3,7 +3,6 @@ import express from 'express';
 import { StaticRouter } from 'react-router-dom';
 import App from './App';
 import path from 'path';
-import fs from 'fs';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
@@ -14,16 +13,7 @@ import { END } from 'redux-saga';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 
 
-// asset-manifest.json에서 파일 경로들을 조회합니다.
-const manifest = JSON.parse(
-  fs.readFileSync(path.resolve('./build/asset-manifest.json'), 'utf-8')
-);
-  
-const chunks = Object.keys(manifest.files)
-  .filter(key => /chunks\.js$/.exec(key)) // chunk.js로 끝나는 키를 찾아서
-  .map(key => `<script src="${manifest.files[key]}></script>"`) // 스크립트 태그로 변환하고
-  .join(''); // 합침
-  
+// asset-manifest.json에서 파일 경로들을 조회합니다. 
 const statsFile = path.resolve('./build/loadable-stats.json'); 
 
 function createPage(root, tags) {
