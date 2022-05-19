@@ -1,27 +1,6 @@
-const koa = require('koa');
+const Koa = require('koa');
 
-const app = new koa();
-
-app.use(async(ctx, next) => {
-  console.log("ctx.url", ctx.url);
-  console.log(1);
-  if (ctx.query.authorized !== '1') {
-    ctx.status = 401; // Unauthorized
-    return;
-  }
-  await next();
-  console.log('END');
-});
-
-app.use((ctx, next) => {
-  console.log(2);
-  next();
-});
-
-app.use((ctx) => {
-  ctx.body = 'hello world!';
-})
-
+const app = new Koa();
 
 app.listen(4000, () => {
   console.log('Listening to port 4000');
