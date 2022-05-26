@@ -36,7 +36,7 @@ const StyledInput = styled.input`
 `;
 
 /*
-  From Footer or Login Register Link
+  Form Footer or Login Register Link
 */
 const Footer = styled.div`
   margin-top: 2rem;
@@ -50,6 +50,11 @@ const Footer = styled.div`
   }
 `;
 
+const ButtonWithMarginTop = styled(Button)`
+  margin-top: 1rem;
+`;
+
+
 const AuthForm = () => {
   return (
     <AuthFormBlock>
@@ -62,9 +67,9 @@ const AuthForm = () => {
           placeholder='password'
           type='password'
         />
-        <Button>
+        <ButtonWithMarginTop cyan fullWidth style={{ marginTop: '1rem' }}>
           Login
-        </Button>
+        </ButtonWithMarginTop>
       </form>
       <Footer>
         <Link to="/register">Register</Link>
