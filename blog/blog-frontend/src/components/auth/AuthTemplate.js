@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 /*
   회원가입 / 로그인 페이지의 레이아웃을 담당하는 컴포넌트입니다.
 */
-
 const AuthTemplateBlock = styled.div`
   position: absolute;
   left: 0;
@@ -20,7 +19,9 @@ const AuthTemplateBlock = styled.div`
   align-items: center;
 `;
 
-/* white box */
+/* 
+  white box 
+*/
 const WhiteBox = styled.div`
   .logo-area {
     display: block;
@@ -35,7 +36,6 @@ const WhiteBox = styled.div`
   background: white;
   border-radius: 2px;
 `
-
 
 const AuthTemplate = ({ children }) => {
   return (

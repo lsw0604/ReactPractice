@@ -72,7 +72,7 @@ const AuthForm = ({ type }) => {
           placeholder='password'
           type='password'
         />
-        {type === 'Register' && (
+        {type === 'register' && (
           <StyledInput
             autoComplete='new-password'
             name="passwordConfirm"
@@ -85,7 +85,7 @@ const AuthForm = ({ type }) => {
         </ButtonWithMarginTop>
       </form>
       <Footer>
-        {type === 'Login' ? (
+        {type === 'login' ? (
           <Link to="/register">Register</Link>
         ) : (
           <Link to="/login">Login</Link>
