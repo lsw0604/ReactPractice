@@ -4,7 +4,7 @@ import produce from 'immer';
 const CHANGE_FIELD = 'auth/CHANGE_FIELD';
 const INITIALIZE_FORM = 'auth/INITIALIZE';
 
-export const changeFiled = createAction(
+export const changeField = createAction(
   CHANGE_FIELD,
   ({ form, key, value }) => ({
     form,
@@ -12,7 +12,7 @@ export const changeFiled = createAction(
     value,
   }),
 );
-export const initializForm = createAction(INITIALIZE_FORM, form => form);
+export const initializeForm = createAction(INITIALIZE_FORM, form => form);
 
 const initialState = {
   register: {
