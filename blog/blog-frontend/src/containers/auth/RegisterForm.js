@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeField, initializeForm, register } from '../../modules/auth';
 import AuthForm from '../../components/auth/AuthForm';
 import { check } from '../../modules/user';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
@@ -54,14 +55,14 @@ const RegisterForm = () => {
     }
   }, [auth, authError, dispatch]);
 
-  // user 값이 설정됐는지 확인
+  const navigate = useNavigate();
 
+  // user 값이 설정됐는지 확인
   useEffect(() => {
     if (user) {
-      console.log('check API SUCCESS');
-      console.log(user);
+      navigate('/'); // go to HOMEPAGE
     }
-  }, [user]);
+  }, [navigate, user]);
   
   return (
     <AuthForm
