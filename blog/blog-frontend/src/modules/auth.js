@@ -7,7 +7,7 @@ import createRequestSaga, {
 import * as authAPI from '../lib/api/auth';
 
 const CHANGE_FIELD = 'auth/CHANGE_FIELD';
-const INITIALIZE_FORM = 'auth/INITIALIZE';
+const INITIALIZE_FORM = 'auth/INITIALIZE_FORM';
 
 const [REGISTER, REGISTER_SUCCESS, REGISTER_FAILURE] = createRequestActionTypes(
   'auth/REGISTER',
@@ -25,8 +25,8 @@ export const changeField = createAction(
     value,
   }),
 );
-export const initializeForm = createAction(INITIALIZE_FORM, form => form);
 
+export const initializeForm = createAction(INITIALIZE_FORM, form => form);
 export const register = createAction(REGISTER, ({ username, password }) => ({
   username,
   password,
@@ -55,6 +55,8 @@ const initialState = {
     username: '',
     password: '',
   },
+  auth: null,
+  authError: null,
 };
 
 const auth = handleActions(
