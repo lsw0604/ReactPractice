@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeField, initializeForm, register } from '../../modules/auth';
 import AuthForm from '../../components/auth/AuthForm';
@@ -6,6 +6,7 @@ import { check } from '../../modules/user';
 import { useNavigate } from 'react-router-dom';
 
 const RegisterForm = () => {
+  const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
     form: auth.register,
@@ -13,8 +14,10 @@ const RegisterForm = () => {
     authError: auth.authError,
     user: user.user,
   }));
+  const navigate = useNavigate();
+
   // input change eventHandler
-  const onChange = e => {
+  const onChange = (e) => {
     const { value, name } = e.target;
     dispatch(
       changeField({
@@ -26,11 +29,23 @@ const RegisterForm = () => {
   };
 
   // form submit eventHandler
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     const { username, password, passwordConfirm } = form;
+    // 하나라도 비어 있다면
+    if ([username, password, passwordConfirm].includes('')) {
+      setError('you must be fill in the blank');
+      return;
+    }
+    // Wrong Password
     if (password !== passwordConfirm) {
-      // TODO: ERROR CATCH
+      setError('password do not match');
+      dispatch(
+        changeField({ form: 'register', key: 'password', value: '' }),
+      );
+      dispatch(
+        changeField({ form: 'register', key: 'passwordConfirm', value: '' }),
+      );
       return;
     }
     dispatch(register({ username, password }));
@@ -44,18 +59,22 @@ const RegisterForm = () => {
   // REGISTER SUCCESS/FAILURE
   useEffect(() => {
     if (authError) {
-      console.log('ERROR');
-      console.log(authError);
+      // already exists username
+      if (authError.response.status === 409) {
+        setError('already exists username');
+        return;
+      }
+      // etc reason
+      setError('Failure register');
       return;
     }
+
     if (auth) {
       console.log('register SUCCESS');
       console.log(auth);
       dispatch(check());
     }
   }, [auth, authError, dispatch]);
-
-  const navigate = useNavigate();
 
   // user 값이 설정됐는지 확인
   useEffect(() => {
@@ -70,6 +89,7 @@ const RegisterForm = () => {
       form={form}
       onChange={onChange}
       onSubmit={onSubmit}
+      error={error}
     />
   );
 };
