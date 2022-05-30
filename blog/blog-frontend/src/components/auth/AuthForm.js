@@ -59,6 +59,17 @@ const textMap = {
   register: 'Register',
 };
 
+/* 
+  SHOW ERROR
+*/
+
+const ErrorMessage = styled.div`
+  color: red;
+  text-align: center;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+`;
+
 const AuthForm = ({ type, form, onChange, onSubmit }) => {
   const text = textMap[type];
   return (
@@ -90,6 +101,7 @@ const AuthForm = ({ type, form, onChange, onSubmit }) => {
             value={form.passwordConfirm}
           />
         )}
+        <ErrorMessage>ERROR</ErrorMessage>
         <ButtonWithMarginTop cyan fullWidth style={{ marginTop: '1rem' }}>
           {text}
         </ButtonWithMarginTop>
