@@ -1,9 +1,10 @@
-import Button from '../components/common/Button';
+import Header from '../components/common/Header';
 
 const PostListPage = () => {
   return (
     <div>
-      <Button>Button</Button>
+      <Header />
+      <div>HEllO</div>
     </div>
   );
 };
