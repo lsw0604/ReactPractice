@@ -2,10 +2,10 @@ import Header from '../components/common/Header';
 
 const PostListPage = () => {
   return (
-    <div>
+    <>
       <Header />
-      <div>HEllO</div>
-    </div>
+      <div>HELLO</div>
+    </>
   );
 };
 

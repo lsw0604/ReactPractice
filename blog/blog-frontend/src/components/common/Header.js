@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Responsive from './Responsive';
 import Button from './Button';
+import { Link } from 'react-router-dom';
 
 const HeaderBlock = styled.div`
   position: fixed;
@@ -34,7 +35,7 @@ const Wrapper = styled(Responsive)`
 */
 
 const Spacer = styled.div`
-  height: 4px;
+  height: 4rem;
 `;
 
 const Header = () => {
@@ -42,9 +43,13 @@ const Header = () => {
     <>
       <HeaderBlock>
         <Wrapper>
-          <div className='logo'>REACTERS</div>
-          <div className='right'>
-            <Button>Login</Button>
+          <Link to="/" className="logo">
+            REACTERS
+          </Link>
+          <div className="right">
+            <Button to="/login">
+              Login
+            </Button>
           </div>
         </Wrapper>
       </HeaderBlock>
