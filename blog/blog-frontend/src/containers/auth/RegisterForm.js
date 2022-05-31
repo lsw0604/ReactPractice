@@ -80,6 +80,12 @@ const RegisterForm = () => {
   useEffect(() => {
     if (user) {
       navigate('/'); // go to HOMEPAGE
+      try {
+        localStorage.setItem('user', JSON.stringify(user));
+      } catch (e) {
+        console.log('localStorage is not working');
+        console.log('Error', e);
+      }
     }
   }, [navigate, user]);
   
