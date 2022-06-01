@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 
@@ -60,28 +60,66 @@ const TagListBlock = styled.div`
   margin-top: 0.5rem;
 `;
 
-// React.memo를 사용하여 tags 값이 바뀔 때만 리렌더링되도록 처리
-const TagItem = React.memo(({ tag }) => <Tag>#{tag}</Tag>);
+// React.memo를 사용하여 tag 값이 바뀔 때만 리렌더링되도록 처리
+const TagItem = React.memo(({ tag, onRemove }) => (
+  <Tag onClick={() => onRemove(tag)}>#{tag}</Tag>
+));
 
 
 // React.memo를 사용하여 tags삽이 바뀔 때만 리렌더링되도록 처리
-const TagList = React.memo(({ tags }) => (
+const TagList = React.memo(({ tags, onRemove }) => (
   <TagListBlock>
     {tags.map(tag => (
-      <TagItem key={tag} tag={tag} />
+      <TagItem key={tag} tag={tag} onRemove={onRemove} />
     ))}
   </TagListBlock>
 ));
 
 const TagBox = () => {
+  const [input, setInput] = useState('');
+  const [localTags, setLocalTags] = useState([]);
+
+  const insertTag = useCallback(
+    tag => {
+      if (!tag) return; // 공백이라면 추가하지 않음
+      if (localTags.includes(tag)) return; // 이미 존재한다면 추가하지 않음
+      setLocalTags([...localTags, tag]);
+    },
+    [localTags],
+  );
+
+  const onRemove = useCallback(
+    tag => {
+      setLocalTags(localTags.filter(t => t !== tag));
+    },
+    [localTags],
+  );
+
+  const onChange = useCallback(e => {
+    setInput(e.target.value);
+  }, []);
+
+  const onSubmit = useCallback(
+    e => {
+      e.preventDefault();
+      insertTag(input.trim());
+      setInput('');
+    },
+    [input, insertTag],
+  );
+
   return (
     <TagBoxBlock>
       <h4>TAG</h4>
-      <TagForm>
-        <input placeholder='태그를 입력하세요.' />
+      <TagForm onSubmit={onSubmit}>
+        <input 
+          placeholder='please input tag'
+          value={input}
+          onChange={onChange}
+        />
         <button type='submit'>Add</button>
       </TagForm>
-      <TagList tags={['tag1', 'tag2', 'tag3']} />
+      <TagList tags={localTags} onRemove={onRemove} />
     </TagBoxBlock>
   );
 };
