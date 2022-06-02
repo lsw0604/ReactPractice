@@ -48,25 +48,39 @@ const PostContent = styled.div`
   color: ${palette.gray[8]};
 `;
 
-const PostViewer = () => {
+const PostViewer = ({ post, error, loading }) => {
+  // Error
+  if (error) {
+    if (error.response && error.response.status === 404) {
+      return <PostViewerBlock>This Post is not exist</PostViewerBlock>
+    }
+    return <PostViewerBlock>Error</PostViewerBlock>
+  }
+
+  // loading OR doesn't exist POST DATA
+  if (loading || !post) {
+    return null;
+  }
+
+  const { title, body, user, publishDate, tags } = post;
   return (
     <PostViewerBlock>
       <PostHead>
-        <h1>TITLE</h1>
+        <h1>{title}</h1>
         <SubInfo>
           <span>
-            <b>Tester</b>
+            <b>{user.username}</b>
           </span>
-          <span>{new Date().toLocaleDateString()}</span>
+          <span>{new Date(publishDate).toLocaleDateString()}</span>
         </SubInfo>
         <Tags>
-          <div className='tag'>TAG1</div>
-          <div className='tag'>TAG2</div>
-          <div className='tag'>TAG3</div>
+          {tags.map(tag => (
+            <div className='tag'>#{tag}</div>
+          ))}
         </Tags>
       </PostHead>
       <PostContent
-        dangerouslySetInnerHTML={{ __html: '<p>HTML <b>내용</b>입니다.</p>' }}
+        dangerouslySetInnerHTML={{ __html: body }}
       />
     </PostViewerBlock>
   );
