@@ -23,6 +23,9 @@ const WriteActionButtons = ({ onCancel, onPublish }) => {
       <StyledButton cyan onClick={onPublish}>
         Post Submit
       </StyledButton>
+      <StyledButton onClick={onCancel}>
+        Cancel
+      </StyledButton>
     </WriteActionButtonBlock>
   );
 };
