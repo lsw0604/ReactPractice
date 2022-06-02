@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import WriteActionButtons from '../../components/write/WriteActionButton';
 import { useSelector, useDispatch } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { writePost } from '../../modules/write';
+import { useNavigate } from 'react-router-dom';
 
 const WriteActionButtonsContainer = ({ history }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { title, body, tags, post, postError } = useSelector(({ write }) => (
     {
@@ -29,20 +30,25 @@ const WriteActionButtonsContainer = ({ history }) => {
 
   // POST Cancel
   const onCancel = () => {
-    history.goBack();
+    navigate(-1);
   };
 
   // SUCCESS or FAILURE
   useEffect(() => {
     if (post) {
       const { _id, user } = post;
-      history.push(`/@${user.username}/${_id}`);
+      navigate(`/@${user.username}/${_id}`);
     }
     if (postError) {
       console.log(postError);
     }
-  }, [history, post, postError]);
-  return <WriteActionButtons onPublish={onPublish} onCancel={onCancel} />;
+  }, [navigate, post, postError]);
+  return (
+    <WriteActionButtons 
+      onPublish={onPublish} 
+      onCancel={onCancel} 
+    />
+  );
 };
 
-export default withRouter(WriteActionButtonsContainer);
+export default WriteActionButtonsContainer;
