@@ -49,7 +49,6 @@ const write = handleActions(
     }),
     [WRITE_POST]: state => ({
       ...state,
-      // post와 postError를 초기화
       post: null,
       postError: null,
     }),
