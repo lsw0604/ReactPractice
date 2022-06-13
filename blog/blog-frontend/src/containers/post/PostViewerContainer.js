@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from '../../../node_modules/react-redux/es/exports';
-import { useNavigate } from 'react-router-dom';
 import { readPost, unloadPost } from '../../modules/post';
 import PostViewer from '../../components/post/PostViewer';
 
