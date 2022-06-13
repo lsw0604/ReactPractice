@@ -15,7 +15,7 @@ const WriteActionButtonsContainer = () => {
     postError: write.postError,
   }));
 
-  // SUBMIT
+  // 포스트 등록
   const onPublish = () => {
     dispatch(
       writePost({
@@ -26,12 +26,12 @@ const WriteActionButtonsContainer = () => {
     );
   };
 
-  // CANCEL
+  // 취소
   const onCancel = () => {
     navigate(-1);
   };
 
-  // SUCCESS or FAILURE
+  // 성공 혹은 실패시 할 작업
   useEffect(() => {
     if (post) {
       const { _id, user } = post;
