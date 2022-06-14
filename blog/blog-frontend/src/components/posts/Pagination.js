@@ -26,9 +26,17 @@ const Pagination = ({ page, lastPage, username, tag }) => {
           page === 1 ? undefined : buildLink({ username, tag, page : page -1 })
         }
       >
-        NEXT
+        Prev
       </Button>
-      <PageNumber>{page}</PageNumber>   
+      <PageNumber>{page}</PageNumber>
+      <Button
+        disabled={page === lastPage}
+        to={
+          page === lastPage ? undefined : buildLink({ username, tag, page : page + 1 })
+        }
+      >
+        Next
+      </Button>
     </PaginationBlock>
   );
 };

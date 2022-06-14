@@ -1,6 +1,6 @@
 import React from 'react';
 import Pagination from '../../components/posts/Pagination';
-import { useSelector } from 'react-router';
+import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 const PaginationContainer = () => {
@@ -14,7 +14,7 @@ const PaginationContainer = () => {
   const { lastPage, posts, loading } = useSelector(({ posts, loading }) => ({
     lastPage: posts.lastPage,
     posts: posts.posts,
-    loading: loading['posts.LIST_POSTS'],
+    loading: loading['posts/LIST_POSTS'],
   }));
 
   // 포스트 데이터가 없거나 로딩 중이면 아무것도 보여주지 않음
