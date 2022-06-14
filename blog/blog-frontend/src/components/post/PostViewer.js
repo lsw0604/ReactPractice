@@ -51,9 +51,7 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
         <Tags tags={tags} />
       </PostHead>
       { actionButtons }
-      <PostContent 
-        dangerouslySetInnerHTML={{ __html: body }}
-      />
+      <PostContent dangerouslySetInnerHTML={{ __html: body }} />
     </PostViewerBlock>
   );
 };
